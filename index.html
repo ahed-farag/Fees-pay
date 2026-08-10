@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Drift - Payment</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
@@ -117,31 +117,59 @@
       opacity: 1;
     }
 
-    /* Notice Box (الخانة المطلوبة) */
+    /* Notice Box (صندوق التنبيه بالإنجليزية والعربية) */
     .notice-box {
       background: rgba(239, 68, 68, 0.08);
       border: 1px dashed rgba(239, 68, 68, 0.4);
       border-radius: 14px;
-      padding: 12px 14px;
+      padding: 14px;
       margin-bottom: 20px;
       display: flex;
       align-items: flex-start;
-      gap: 10px;
+      gap: 12px;
     }
 
     .notice-icon {
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       line-height: 1;
+      margin-top: 2px;
     }
 
-    .notice-text {
+    .notice-content {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .notice-text-en {
       font-size: 0.76rem;
       color: #fca5a5;
       line-height: 1.4;
       font-weight: 500;
     }
 
-    .notice-text strong {
+    .notice-text-en strong {
+      color: #ef4444;
+      font-weight: 700;
+    }
+
+    .notice-divider {
+      height: 1px;
+      background: rgba(239, 68, 68, 0.2);
+      width: 100%;
+    }
+
+    .notice-text-ar {
+      font-family: 'Cairo', sans-serif;
+      font-size: 0.78rem;
+      color: #fca5a5;
+      line-height: 1.5;
+      direction: rtl;
+      text-align: right;
+    }
+
+    .notice-text-ar strong {
       color: #ef4444;
       font-weight: 700;
     }
@@ -247,11 +275,17 @@
       <span class="copy-icon" onclick="copyWallet('01286999875')">📋</span>
     </div>
 
-    <!-- Mandatory Payment Notice Box -->
+    <!-- Mandatory Payment Notice Box (EN + AR) -->
     <div class="notice-box">
       <span class="notice-icon">⚠️</span>
-      <div class="notice-text">
-        <strong>Mandatory Requirement:</strong> Fees cannot be deducted from profits. Payment must be completed separately within <strong>1 hour</strong>.
+      <div class="notice-content">
+        <div class="notice-text-en">
+          <strong>Mandatory Requirement:</strong> Fees cannot be deducted from profits. Payment must be completed separately within <strong>1 hour</strong>.
+        </div>
+        <div class="notice-divider"></div>
+        <div class="notice-text-ar">
+          <strong>شرط إجباري:</strong> لا يمكن خصم الرسوم من الأرباح، ويجب إتمام الدفع بشكل منفصل خلال <strong>ساعة واحدة</strong>.
+        </div>
       </div>
     </div>
 
